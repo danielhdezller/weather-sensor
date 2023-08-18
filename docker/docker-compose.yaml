@@ -14,7 +14,6 @@ services:
       - POSTGRES_USER=${DB_USER:-WeatherAppUser}
       - POSTGRES_PASSWORD=${DB_PASSWORD:-WeatherAppUserSecret}
       - POSTGRES_DB=${DB_DATABASE:-Weather}
-
   weather-nest-server:
     build:
       context: .
