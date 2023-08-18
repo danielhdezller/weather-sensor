@@ -1,0 +1,36 @@
+version: "3.4"
+
+services:
+  weather-sql-server:
+    image: postgres:14.1
+    command: ["postgres", "-c", "log_statement=${DB_LOG_LEVEL:-all}"]
+    restart: "no"
+    networks:
+      - weather-network
+    ports:
+      - ${NODE_DEBUGGER_PORT:-5432}:5432
+      - ${SERVER_PORT:-300}:3000
+    environment:
+      - POSTGRES_USER=${DB_USER:-WeatherAppUser}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-WeatherAppUserSecret}
+      - POSTGRES_DB=${DB_DATABASE:-Weather}
+
+  weather-nest-server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: "no"
+    ports:
+      - ${NODE_PORT:-3000}:3000
+      - ${NODE_DEBUGGER_PORT:-9229}:9229
+      - ${NODE_DEBUGGER_TEST_PORT:-9230}:9230
+    networks:
+      - weather-network
+    volumes:
+      - ../project:/usr/src/project
+      - ./entrypoint.sh:/entrypoint.sh
+    depends_on:
+      - weather-sql-server
+networks:
+  weather-network:
+    external: false
