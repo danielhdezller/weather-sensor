@@ -9,7 +9,7 @@ export const dataSourceOptions: DataSourceOptions = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   entities: ['dist/**/*.entity{.ts,.js}'],
-  migrations: ['dist/migrations/**/*.js'],
+  migrations: ['dist/typeorm/migrations/**/*.js'],
   synchronize: false,
 };
 
