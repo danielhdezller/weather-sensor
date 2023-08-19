@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { UploadSensorDto } from '../dto/upload-sensor.dto';
+import { UploadSensorDTO } from '../dto/upload-sensor.dto';
 import { SensorRepository } from '../repositories/sensors.repository';
 import { InjectRepository } from '@nestjs/typeorm';
+import { SensorSearchDTO } from '../dto/search-sensor.dto';
 
 @Injectable()
 export class SensorsService {
@@ -10,7 +11,11 @@ export class SensorsService {
     private readonly sensorRepository: SensorRepository,
   ) {}
 
-  async uploadSensorData(uploadSensorDto: UploadSensorDto) {
-    return this.sensorRepository.uploadSensorData(uploadSensorDto);
+  async uploadSensorData(uploadSensorDTO: UploadSensorDTO) {
+    return this.sensorRepository.uploadSensorData(uploadSensorDTO);
+  }
+
+  async searchSensorData(sensorSearchDTO: SensorSearchDTO) {
+    return this.sensorRepository.searchSensorData(sensorSearchDTO);
   }
 }

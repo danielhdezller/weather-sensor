@@ -3,7 +3,7 @@ import { Sensor } from '../entities/sensor.entity';
 import { DtoProperty } from 'src/shared/dto-property';
 import { IsInt } from 'class-validator';
 
-export class UploadSensorDto extends PickType(Sensor, [
+export class UploadSensorDTO extends PickType(Sensor, [
   'humidity',
   'rainfall',
   'temperature',
