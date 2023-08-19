@@ -1,11 +1,6 @@
-import {
-  IsNumber,
-  IsEnum,
-  IsObject,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
+import { IsNumber, IsEnum, IsString } from 'class-validator';
 import { DtoOptionalProperty } from 'src/shared/dto-property';
+import { ValidInstanceOf } from 'src/shared/validators/valid-instance-of.validator';
 
 enum AggregationOperatorEnum {
   COUNT = 'COUNT',
@@ -21,50 +16,55 @@ enum SortOrderEnum {
 }
 
 class FilterValue {
+  @DtoOptionalProperty()
   @IsNumber()
   gte?: number;
 
+  @DtoOptionalProperty()
   @IsNumber()
   lte?: number;
 
+  @DtoOptionalProperty()
   @IsNumber()
   eq?: number;
 }
 
 class Filters {
-  @IsObject()
+  @DtoOptionalProperty()
+  @ValidInstanceOf(FilterValue)
   temperature?: FilterValue;
 }
 
 class Sort {
+  @DtoOptionalProperty()
   @IsString()
-  column: string;
+  column?: string;
 
+  @DtoOptionalProperty()
   @IsEnum(SortOrderEnum)
-  order: SortOrderEnum;
+  order?: SortOrderEnum;
 }
 
 class Aggregate {
+  @DtoOptionalProperty()
   @IsString()
-  column: string;
+  column?: string;
 
+  @DtoOptionalProperty()
   @IsEnum(AggregationOperatorEnum)
-  operator: AggregationOperatorEnum;
+  operator?: AggregationOperatorEnum;
 }
 
 export class SensorSearchDTO {
   @DtoOptionalProperty({ type: Filters })
-  @ValidateNested()
-  @IsObject()
-  filters: Filters;
+  @ValidInstanceOf(Filters)
+  filters?: Filters;
 
   @DtoOptionalProperty({ type: Sort })
-  @ValidateNested()
-  @IsObject()
-  sort: Sort;
+  @ValidInstanceOf(Sort)
+  sort?: Sort;
 
   @DtoOptionalProperty({ type: Aggregate })
-  @ValidateNested()
-  @IsObject()
-  aggregate: Aggregate;
+  @ValidInstanceOf(Aggregate)
+  aggregate?: Aggregate;
 }
