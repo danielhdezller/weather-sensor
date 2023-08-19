@@ -1,16 +1,17 @@
-import { Body, Controller, Post, HttpCode, HttpStatus } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { SingInDto } from '../dto/sing-in.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { SigInResponseDTO } from '../dto/sing-in-response.dto';
 
 @ApiTags('Auth')
 @Controller('api/auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Body() signInDto: SingInDto) {
+  @ApiResponse({ type: SigInResponseDTO })
+  signIn(@Body() signInDto: SingInDto): Promise<SigInResponseDTO> {
     return this.authService.signIn(signInDto);
   }
 }

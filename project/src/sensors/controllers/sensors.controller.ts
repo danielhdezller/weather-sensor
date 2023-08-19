@@ -3,7 +3,7 @@ import { SensorsService } from '../services/sensors.service';
 import { UploadSensorDTO } from '../dto/upload-sensor.dto';
 import { Sensor } from '../entities/sensor.entity';
 import { SensorSearchDTO } from '../dto/search-sensor.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Sensors')
 @Controller('api/sensors')
@@ -11,6 +11,7 @@ export class SensorsController {
   constructor(private readonly sensorsService: SensorsService) {}
 
   @Post('upload')
+  @ApiResponse({ type: Sensor })
   async uploadSensorData(
     @Body() uploadSensorDTO: UploadSensorDTO,
   ): Promise<Sensor> {
@@ -18,7 +19,10 @@ export class SensorsController {
   }
 
   @Get('search')
-  async searchSensorData(@Body() sensorSearchDTO: SensorSearchDTO) {
+  @ApiResponse({ type: [Sensor] })
+  async searchSensorData(
+    @Body() sensorSearchDTO: SensorSearchDTO,
+  ): Promise<Sensor[]> {
     return this.sensorsService.searchSensorData(sensorSearchDTO);
   }
 }
