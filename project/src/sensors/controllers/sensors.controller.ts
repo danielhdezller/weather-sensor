@@ -6,7 +6,7 @@ import { SensorSearchDTO } from '../dto/search-sensor.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Sensors')
-@Controller('api/sensors')
+@Controller('sensors')
 export class SensorsController {
   constructor(private readonly sensorsService: SensorsService) {}
 

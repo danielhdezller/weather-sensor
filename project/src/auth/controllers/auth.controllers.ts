@@ -5,7 +5,7 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SigInResponseDTO } from '../dto/sing-in-response.dto';
 
 @ApiTags('Auth')
-@Controller('api/auth')
+@Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
