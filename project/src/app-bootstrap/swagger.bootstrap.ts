@@ -13,7 +13,7 @@ export function configureDocumentationGenerator(
   const swaggerPaths = [
     path,
     // Add a second swagger path with that reference to the best tv show.
-    'docs',
+    'the-office',
   ];
 
   // Extract a list of paths that will be protected.
