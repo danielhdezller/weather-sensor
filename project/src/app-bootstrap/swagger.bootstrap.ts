@@ -1,5 +1,9 @@
 import { INestApplication } from '@nestjs/common';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import {
+  DocumentBuilder,
+  SwaggerDocumentOptions,
+  SwaggerModule,
+} from '@nestjs/swagger';
 
 /**
  * Configure a INestApplication to use a document generator (swagger right now).
@@ -16,16 +20,9 @@ export function configureDocumentationGenerator(
     'the-office',
   ];
 
-  // Extract a list of paths that will be protected.
-  const pathWithCredentials: string[] = [];
-
-  swaggerPaths.forEach((path) =>
-    pathWithCredentials.push(`/${path}`, `/${path}-json`),
-  );
-
   // Configure the list of documents path`
   swaggerPaths.forEach((path) => {
-    const options = new DocumentBuilder()
+    const config = new DocumentBuilder()
       .setTitle('Weather')
       .setDescription('RestFul API that upload sensor data and search it.')
       .setContact(
@@ -34,9 +31,15 @@ export function configureDocumentationGenerator(
         'dhdezllerena94@gmail.com',
       )
       .setVersion('1')
+      .addBearerAuth()
       .build();
 
-    const document = SwaggerModule.createDocument(app, options);
+    const options: SwaggerDocumentOptions = {
+      ignoreGlobalPrefix: false,
+    };
+
+    const document = SwaggerModule.createDocument(app, config, options);
+
     SwaggerModule.setup(path, app, document);
   });
 }

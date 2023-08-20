@@ -1,8 +1,10 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from 'src/users/services/users.service';
+import { User, UsersService } from 'src/users/services/users.service';
 import { SingInDto } from '../dto/sing-in.dto';
 import { SigInResponseDTO } from '../dto/sing-in-response.dto';
+import { JwtPayload } from '../auth.interface';
+import { castAndValidate } from 'src/shared/transform-to-dto';
 
 @Injectable()
 export class AuthService {
@@ -11,14 +13,42 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signIn(signInDto: SingInDto): Promise<SigInResponseDTO> {
-    const user = await this.usersService.findOne(signInDto.email);
-    if (user?.password !== signInDto.password) {
-      throw new UnauthorizedException();
+  /**
+   * In a project with a singUp user, this method will verify from a hashed password that came from DB.
+   *
+   * @param {string} password
+   * @param {User} user
+   * @return {*}  {boolean}
+   * @memberof AuthService
+   */
+  checkPassword(password: string, user: User): boolean {
+    return user.password === password;
+  }
+
+  /**
+   * Sing in a user in the application.
+   *
+   * @param {SingInDto} signInCredentials
+   * @return {*}  {Promise<SigInResponseDTO>}
+   * @memberof AuthService
+   */
+  async signIn(signInCredentials: SingInDto): Promise<SigInResponseDTO> {
+    const { email, password } = signInCredentials;
+
+    const user: User = await this.usersService.findOne(email);
+    const isValidPassword = this.checkPassword(password, user);
+    if (!isValidPassword) {
+      throw new UnauthorizedException(
+        `The user: ${email} credentials are not valid.`,
+      );
     }
-    const payload = { sub: user.userId, username: user.email };
-    return {
-      access_token: await this.jwtService.signAsync(payload),
+
+    const jwtUserToken: JwtPayload = {
+      userId: user.id,
     };
+
+    return castAndValidate(SigInResponseDTO, {
+      access_token: this.jwtService.sign(jwtUserToken),
+    });
   }
 }

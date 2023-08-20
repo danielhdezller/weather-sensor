@@ -1,12 +1,15 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { SensorsService } from '../services/sensors.service';
 import { UploadSensorDTO } from '../dto/upload-sensor.dto';
 import { Sensor } from '../entities/sensor.entity';
 import { SensorSearchDTO } from '../dto/search-sensor.dto';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @ApiTags('Sensors')
 @Controller('sensors')
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class SensorsController {
   constructor(private readonly sensorsService: SensorsService) {}
 

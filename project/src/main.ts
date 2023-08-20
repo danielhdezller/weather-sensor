@@ -5,9 +5,9 @@ import { configureDefaultValidationPipes } from './app-bootstrap/routing.bootstr
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.setGlobalPrefix('api');
   configureDefaultValidationPipes(app);
   configureDocumentationGenerator(app, 'docs');
-  app.setGlobalPrefix('api');
   await app.listen(3000);
 }
 bootstrap();

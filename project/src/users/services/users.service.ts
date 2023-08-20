@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 export interface User {
-  userId: number;
+  id: number;
   email: string;
   password: string;
 }
@@ -17,13 +17,21 @@ export class UsersService {
    */
   private readonly users = [
     {
-      userId: 1,
+      id: 1,
       email: 'admin@admin.com',
       password: 'pass',
     },
   ];
 
-  async findOne(email: string): Promise<User | undefined> {
+  findOne(email: string): User | undefined {
     return this.users.find((user) => user.email === email);
+  }
+
+  getUserById(id: number): User {
+    const user = this.users.find((user) => user.id === id);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return user;
   }
 }
