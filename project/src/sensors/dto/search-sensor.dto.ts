@@ -30,27 +30,49 @@ class FilterValue {
 }
 
 class Filters {
-  @DtoOptionalProperty()
-  @ValidInstanceOf(FilterValue)
+  @DtoOptionalProperty({ type: FilterValue })
   temperature?: FilterValue;
+
+  @DtoOptionalProperty({ type: FilterValue })
+  humidity?: FilterValue;
+
+  @DtoOptionalProperty({ type: FilterValue })
+  rainfall?: FilterValue;
+
+  @DtoOptionalProperty({ type: FilterValue })
+  timestamp?: FilterValue;
+
+  @DtoOptionalProperty({ type: FilterValue })
+  windspeed?: FilterValue;
+
+  @DtoOptionalProperty({ type: FilterValue })
+  visibility?: FilterValue;
 }
 
 class Sort {
-  @DtoOptionalProperty()
+  @DtoOptionalProperty({ example: 'temperature' })
   @IsString()
   column?: string;
 
-  @DtoOptionalProperty()
+  @DtoOptionalProperty({
+    example: SortOrderEnum.ASCENDING,
+    type: 'enum',
+    enum: SortOrderEnum,
+  })
   @IsEnum(SortOrderEnum)
   order?: SortOrderEnum;
 }
 
 class Aggregate {
-  @DtoOptionalProperty()
+  @DtoOptionalProperty({ example: 'temperature' })
   @IsString()
   column?: string;
 
-  @DtoOptionalProperty()
+  @DtoOptionalProperty({
+    type: 'enum',
+    enum: AggregationOperatorEnum,
+    example: AggregationOperatorEnum.MAX,
+  })
   @IsEnum(AggregationOperatorEnum)
   operator?: AggregationOperatorEnum;
 }

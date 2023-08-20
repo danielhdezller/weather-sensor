@@ -30,7 +30,7 @@ export function configureDocumentationGenerator(
         'https://github.com/danielhdezllera',
         'dhdezllerena94@gmail.com',
       )
-      .setVersion('1')
+      .setVersion('3.1')
       .addBearerAuth()
       .build();
 
