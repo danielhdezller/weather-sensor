@@ -5,6 +5,13 @@ export interface User {
   email: string;
   password: string;
 }
+export const Users: User[] = [
+  {
+    id: 1,
+    email: 'admin@admin.com',
+    password: 'pass',
+  },
+];
 
 @Injectable()
 export class UsersService {
@@ -15,20 +22,13 @@ export class UsersService {
    * @private
    * @memberof UsersService
    */
-  private readonly users = [
-    {
-      id: 1,
-      email: 'admin@admin.com',
-      password: 'pass',
-    },
-  ];
 
   findOne(email: string): User | undefined {
-    return this.users.find((user) => user.email === email);
+    return Users.find((user) => user.email === email);
   }
 
   getUserById(id: number): User {
-    const user = this.users.find((user) => user.id === id);
+    const user = Users.find((user) => user.id === id);
     if (!user) {
       throw new NotFoundException('User not found');
     }

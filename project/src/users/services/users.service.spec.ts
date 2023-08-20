@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UsersService } from './users.service';
+import { Users, UsersService } from './users.service';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -14,5 +14,9 @@ describe('UsersService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  it('should return a user by id', () => {
+    expect(service.getUserById(Users[0].id)).toEqual(Users[0]);
   });
 });

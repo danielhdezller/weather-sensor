@@ -26,7 +26,7 @@ services:
     networks:
       - weather-network
     volumes:
-      - ../project:/usr/src/project
+      - ../../project:/usr/src/project
       - ./entrypoint.sh:/entrypoint.sh
     depends_on:
       - weather-sql-server

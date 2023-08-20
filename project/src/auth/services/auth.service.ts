@@ -34,8 +34,14 @@ export class AuthService {
    */
   async signIn(signInCredentials: SingInDto): Promise<SigInResponseDTO> {
     const { email, password } = signInCredentials;
+    const user: User = this.usersService.findOne(email);
 
-    const user: User = await this.usersService.findOne(email);
+    if (!user) {
+      throw new UnauthorizedException(
+        `The user: ${email} credentials are not valid.`,
+      );
+    }
+
     const isValidPassword = this.checkPassword(password, user);
     if (!isValidPassword) {
       throw new UnauthorizedException(
