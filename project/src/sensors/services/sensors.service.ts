@@ -3,6 +3,7 @@ import { UploadSensorDTO } from '../dto/upload-sensor.dto';
 import { SensorRepository } from '../repositories/sensors.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SensorSearchDTO } from '../dto/search-sensor.dto';
+import { RawSensorInterface } from './sensors-mapper.service';
 
 @Injectable()
 export class SensorsService {
@@ -15,7 +16,9 @@ export class SensorsService {
     return this.sensorRepository.uploadSensorData(uploadSensorDTO);
   }
 
-  async searchSensorData(sensorSearchDTO: SensorSearchDTO) {
+  async searchSensorData(
+    sensorSearchDTO: SensorSearchDTO,
+  ): Promise<RawSensorInterface[]> {
     return this.sensorRepository.searchSensorData(sensorSearchDTO);
   }
 }

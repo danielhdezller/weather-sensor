@@ -3,6 +3,7 @@ import { Sensor } from '../entities/sensor.entity';
 import { UploadSensorDTO } from '../dto/upload-sensor.dto';
 import { Injectable } from '@nestjs/common';
 import { SensorSearchDTO } from '../dto/search-sensor.dto';
+import { RawSensorInterface } from '../services/sensors-mapper.service';
 
 @Injectable()
 export class SensorRepository extends Repository<Sensor> {
@@ -16,7 +17,9 @@ export class SensorRepository extends Repository<Sensor> {
     return this.save(sensor);
   }
 
-  async searchSensorData(sensorSearchDTO: SensorSearchDTO): Promise<Sensor[]> {
+  async searchSensorData(
+    sensorSearchDTO: SensorSearchDTO,
+  ): Promise<RawSensorInterface[]> {
     const { filters, sort, aggregate } = sensorSearchDTO;
 
     const query = this.createQueryBuilder('sensor');

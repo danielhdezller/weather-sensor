@@ -10,13 +10,18 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { SensorSearchResponseDTO } from '../dto/serach-sensor-response.dto';
+import { SensorsMapperService } from '../services/sensors-mapper.service';
 
 @ApiTags('Sensors')
 @Controller('sensors')
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 export class SensorsController {
-  constructor(private readonly sensorsService: SensorsService) {}
+  constructor(
+    private readonly sensorsService: SensorsService,
+    private readonly sensorsMapperService: SensorsMapperService,
+  ) {}
 
   @Post('upload')
   @ApiResponse({ type: Sensor })
@@ -30,7 +35,7 @@ export class SensorsController {
   }
 
   @Get('search')
-  @ApiResponse({ type: [Sensor] })
+  @ApiResponse({ type: [SensorSearchResponseDTO] })
   @ApiOperation({
     description: `Search the sensor data. 
     You cant try it at swagger, due to nestjs swagger is working with OAS 3.0 
@@ -38,7 +43,12 @@ export class SensorsController {
   })
   async searchSensorData(
     @Body() sensorSearchDTO: SensorSearchDTO,
-  ): Promise<Sensor[]> {
-    return this.sensorsService.searchSensorData(sensorSearchDTO);
+  ): Promise<SensorSearchResponseDTO[]> {
+    const rawSensorsSearch = await this.sensorsService.searchSensorData(
+      sensorSearchDTO,
+    );
+    return this.sensorsMapperService.rawSensorsToSensorsSearchResponseDTO(
+      rawSensorsSearch,
+    );
   }
 }

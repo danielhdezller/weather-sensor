@@ -84,7 +84,7 @@ describe('Sensor controller (e2e)', () => {
       .expect(200);
 
     expect(response.body.length).toBe(1);
-    expect(response.body[0].sensor_temperature).toBe(
+    expect(response.body[0].temperature).toBe(
       querySensorBody.filters.temperature.eq,
     );
   });
@@ -116,6 +116,6 @@ describe('Sensor controller (e2e)', () => {
       .expect(200);
     //Its considering the 3 Sensor data created during the e2e test for Sensor.
     expect(response.body.length).toBe(3);
-    expect(response.body[0].sensor_temperature).toBe(lowestTemperature);
+    expect(response.body[0].temperature).toBe(lowestTemperature);
   });
 });
