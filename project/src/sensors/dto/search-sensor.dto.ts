@@ -2,7 +2,7 @@ import { IsNumber, IsEnum, IsString } from 'class-validator';
 import { DtoOptionalProperty } from 'src/shared/dto-property';
 import { ValidInstanceOf } from 'src/shared/validators/valid-instance-of.validator';
 
-enum AggregationOperatorEnum {
+export enum AggregationOperatorEnum {
   COUNT = 'COUNT',
   MAX = 'MAX',
   MIN = 'MIN',
@@ -10,7 +10,7 @@ enum AggregationOperatorEnum {
   AVG = 'AVG',
 }
 
-enum SortOrderEnum {
+export enum SortOrderEnum {
   ASCENDING = 'ascending',
   DESCENDING = 'descending',
 }

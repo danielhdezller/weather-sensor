@@ -32,7 +32,7 @@ export class AuthService {
    * @return {*}  {Promise<SigInResponseDTO>}
    * @memberof AuthService
    */
-  async signIn(signInCredentials: SingInDto): Promise<SigInResponseDTO> {
+  signIn(signInCredentials: SingInDto): Promise<SigInResponseDTO> {
     const { email, password } = signInCredentials;
     const user: User = this.usersService.findOne(email);
 

@@ -10,7 +10,21 @@ Then paste the "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpX..." at authenti
 - if you haven't already: copy `.env.example` to `.env` at the project folder level.
 
 ```bash
-$ cd ./docker
+$ cd ./docker/project
 # Db and application will start, at mac the first time it takes some time due to the copy of the volumes.
 $ docker-compose up
+```
+
+## Steps to run the Tests:
+
+- if you haven't already: copy `.env.example` to `.env` at the project folder level.
+
+```bash
+$ cd ./docker/test-db
+# The Db for testing proposes will start.
+$ docker-compose up
+# To return to the project folder.
+$ cd ../../project
+# To run the test.
+$ yarn test
 ```
