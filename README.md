@@ -34,3 +34,8 @@ $ cd ../../project
 # To run the test.
 $ yarn test
 ```
+
+## Stay in touch
+
+- Author - [Daniel Hernández](https://github.com/danielhdezller)
+- LinkedIn - [LinkedIn](https://www.linkedin.com/in/daniel-hernandez-ller/)
