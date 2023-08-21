@@ -15,6 +15,10 @@ $ cd ./docker/project
 $ docker-compose up
 ```
 
+## Swagger:
+
+After running it you can find the Swagger documentation at: http://localhost:3000/docs#/
+
 ## Steps to run the Tests:
 
 - if you haven't already: copy `.env.example` to `.env` at the project folder level.
