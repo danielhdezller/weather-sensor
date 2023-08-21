@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { castAndValidate } from 'src/shared/transform-to-dto';
-import { SensorSearchResponseDTO } from '../dto/serach-sensor-response.dto';
+import { SensorSearchResponseDTO } from '../dto/search-sensor-response';
 import { VisibilityEnum } from '../entities/sensor.entity';
 
 export interface RawSensorInterface {

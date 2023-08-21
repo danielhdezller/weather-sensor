@@ -10,7 +10,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { SensorSearchResponseDTO } from '../dto/serach-sensor-response.dto';
+import { SensorSearchResponseDTO } from '../dto/search-sensor-response';
 import { SensorsMapperService } from '../services/sensors-mapper.service';
 
 @ApiTags('Sensors')
